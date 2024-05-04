@@ -1,5 +1,4 @@
 import { Alumnos } from '../../../domain/entities/Alumnos';
-import { Materia } from '../../../domain/entities/Materias';
 import { AlumnosRepository } from '../../../infraestructure/repositories/AlumnosRepository';
 import { MateriasRepository } from '../../../infraestructure/repositories/MateriasRepository';
 

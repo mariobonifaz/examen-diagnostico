@@ -26,3 +26,28 @@ export const getAllTutores = async (req: Request, res: Response,tutoresService: 
         }
     }
 };
+
+export const assignAlumnosToTutores = async (req: Request, res: Response, tutoresService: TutoresService) => {
+    try {
+        const tutorId: number = parseInt(req.params.tutorId, 10);
+        const { alumnoIds } = req.body;
+
+        if (!Array.isArray(alumnoIds)) {
+            throw new Error('materiaIds must be an array');
+        }
+
+        await tutoresService.assignAlumnosToTutores(tutorId, alumnoIds);
+
+        res.status(200).json({ message: 'alumnos assigned successfully' });
+    } catch (err) {
+        if (err instanceof Error) {
+            if (err.message === 'alumnosIds must be an array') {
+                res.status(400).json({ error: err.message });
+            } else {
+                res.status(500).json({ error: err.message });
+            }
+        } else {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+};

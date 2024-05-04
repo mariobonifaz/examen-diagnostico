@@ -11,8 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TutoresService = void 0;
 class TutoresService {
-    constructor(tutoresRepository) {
+    constructor(tutoresRepository, alumnosRepository) {
         this.tutoresRepository = tutoresRepository;
+        this.alumnosRepository = alumnosRepository;
     }
     createTutores(tutores) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -21,6 +22,27 @@ class TutoresService {
             }
             catch (error) {
                 throw new Error(`Error creating recipe: ${error.message}`);
+            }
+        });
+    }
+    assignAlumnosToTutores(tutorId, alumnoIds) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const tutor = yield this.tutoresRepository.getTutorById(tutorId);
+                if (!tutor) {
+                    throw new Error(`Alumno with ID ${tutorId} not found`);
+                }
+                const alumnos = yield Promise.all(alumnoIds.map(id => this.alumnosRepository.getAlumnoById(id)));
+                const ids = alumnos.filter(alumno => alumno !== null).map(alumno => alumno.id);
+                if ('setAlumnos' in tutor) {
+                    yield tutor.setAlumnos(ids);
+                }
+                else {
+                    throw new Error("setAlumnos method not available on alumno object");
+                }
+            }
+            catch (error) {
+                throw new Error(`Error assigning alumnos to materias: ${error.message}`);
             }
         });
     }

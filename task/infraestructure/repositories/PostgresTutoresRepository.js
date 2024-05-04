@@ -30,6 +30,31 @@ class PostgresTutoresRepositoy {
             }
         });
     }
+    assignAlumnosToTutores(tutorId, alumnoIds) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const tutor = yield TutoresModel_1.default.findByPk(tutorId);
+                if (!tutor) {
+                    throw new Error(`Tutor with ID ${tutorId} not found`);
+                }
+                yield tutor.setAlumnos(alumnoIds);
+            }
+            catch (error) {
+                throw new Error(`Error assigning Alumnos to Tutores: ${error.message}`);
+            }
+        });
+    }
+    getTutorById(tutorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const tutor = yield TutoresModel_1.default.findByPk(tutorId);
+                return tutor; // Devuelve el modelo completo sin conversión a JSON
+            }
+            catch (error) {
+                throw new Error(`Error getting tutor by ID: ${error.message}`);
+            }
+        });
+    }
     getAllTutores() {
         return __awaiter(this, void 0, void 0, function* () {
             try {

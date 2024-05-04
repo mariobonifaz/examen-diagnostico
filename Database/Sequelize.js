@@ -13,9 +13,12 @@ exports.sequelize = new sequelize_1.Sequelize('diagnosticoSOA', 'postgres', 'POS
 });
 const AlumnosModel_1 = __importDefault(require("../task/domain/entities/AlumnosModel")); // Asegúrate de ajustar la ruta
 const MateriasModel_1 = __importDefault(require("../task/domain/entities/MateriasModel")); // Asegúrate de ajustar la ruta
+const TutoresModel_1 = __importDefault(require("../task/domain/entities/TutoresModel"));
 // Establecer las relaciones
 AlumnosModel_1.default.belongsToMany(MateriasModel_1.default, { through: 'AlumnosMaterias' });
 MateriasModel_1.default.belongsToMany(AlumnosModel_1.default, { through: 'AlumnosMaterias' });
+AlumnosModel_1.default.belongsToMany(TutoresModel_1.default, { through: 'TutoresAlumnos' });
+TutoresModel_1.default.belongsToMany(AlumnosModel_1.default, { through: 'TutoresAlumnos' });
 // Autenticación y sincronización de la base de datos
 exports.sequelize.authenticate()
     .then(() => {

@@ -9,10 +9,14 @@ export const sequelize = new Sequelize('diagnosticoSOA', 'postgres', 'POSTGRES',
 
 import AlumnosModel from '../task/domain/entities/AlumnosModel'; // Asegúrate de ajustar la ruta
 import MateriasModel from '../task/domain/entities/MateriasModel'; // Asegúrate de ajustar la ruta
+import TutoresModel from '../task/domain/entities/TutoresModel';
 
 // Establecer las relaciones
 AlumnosModel.belongsToMany(MateriasModel, { through: 'AlumnosMaterias' });
 MateriasModel.belongsToMany(AlumnosModel, { through: 'AlumnosMaterias' });
+
+AlumnosModel.belongsToMany(TutoresModel, { through: 'TutoresAlumnos' });
+TutoresModel.belongsToMany(AlumnosModel, {through: 'TutoresAlumnos'});
 
 // Autenticación y sincronización de la base de datos
 sequelize.authenticate()

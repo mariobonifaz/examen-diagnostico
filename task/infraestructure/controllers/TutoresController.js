@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllTutores = exports.createTutores = void 0;
+exports.assignAlumnosToTutores = exports.getAllTutores = exports.createTutores = void 0;
 const createTutores = (req, res, tutoresService) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newTutor = yield tutoresService.createTutores(req.body);
@@ -40,3 +40,28 @@ const getAllTutores = (req, res, tutoresService) => __awaiter(void 0, void 0, vo
     }
 });
 exports.getAllTutores = getAllTutores;
+const assignAlumnosToTutores = (req, res, tutoresService) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const tutorId = parseInt(req.params.tutorId, 10);
+        const { alumnoIds } = req.body;
+        if (!Array.isArray(alumnoIds)) {
+            throw new Error('materiaIds must be an array');
+        }
+        yield tutoresService.assignAlumnosToTutores(tutorId, alumnoIds);
+        res.status(200).json({ message: 'alumnos assigned successfully' });
+    }
+    catch (err) {
+        if (err instanceof Error) {
+            if (err.message === 'alumnosIds must be an array') {
+                res.status(400).json({ error: err.message });
+            }
+            else {
+                res.status(500).json({ error: err.message });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+});
+exports.assignAlumnosToTutores = assignAlumnosToTutores;
