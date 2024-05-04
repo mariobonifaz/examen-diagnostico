@@ -29,14 +29,15 @@ export class PostgresAlumnosRepositoy implements AlumnosRepository {
         }
     }
 
-    async getAlumnoById(alumnoId: number): Promise<Alumnos | null> {
+    async getAlumnoById(alumnoId: number): Promise<any | null> {
         try {
             const alumno = await AlumnosModel.findByPk(alumnoId);
-            return alumno ? (alumno.toJSON() as Alumnos) : null;
+            return alumno; // Devuelve el modelo completo sin conversión a JSON
         } catch (error) {
             throw new Error(`Error getting alumno by ID: ${(error as Error).message}`);
         }
     }
+    
 
     async getAllAlumnos(): Promise<Alumnos[]> {
         try {

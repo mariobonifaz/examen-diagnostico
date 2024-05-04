@@ -42,19 +42,16 @@ const getAllAlumnos = (req, res, alumnosService) => __awaiter(void 0, void 0, vo
 exports.getAllAlumnos = getAllAlumnos;
 const assignMateriasToAlumno = (req, res, alumnosService) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const alumnoId = parseInt(req.params.alumnoId, 10); // Convertir alumnoId a número
+        const alumnoId = parseInt(req.params.alumnoId, 10);
         const { materiaIds } = req.body;
-        // Verificar que materiaIds sea un array
         if (!Array.isArray(materiaIds)) {
             throw new Error('materiaIds must be an array');
         }
-        // Llamar al método en AlumnosService para asignar materias al alumno
         yield alumnosService.assignMateriasToAlumno(alumnoId, materiaIds);
         res.status(200).json({ message: 'Materias assigned successfully' });
     }
     catch (err) {
         if (err instanceof Error) {
-            // Devolver un error de solicitud incorrecta si materiaIds no es un array
             if (err.message === 'materiaIds must be an array') {
                 res.status(400).json({ error: err.message });
             }

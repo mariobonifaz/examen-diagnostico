@@ -1,10 +1,10 @@
-import { Materias } from "../../../domain/entities/Materias";
+import { Materia } from "../../../domain/entities/Materias";
 import { MateriasRepository } from "../../../infraestructure/repositories/MateriasRepository";
 
 export class MateriasService {
     constructor(private materiasRepository: MateriasRepository) {}
 
-    async createMaterias(materias: Materias): Promise<Materias> {
+    async createMaterias(materias: Materia): Promise<Materia> {
         try {
             return await this.materiasRepository.createMaterias(materias);
         } catch (error) {
@@ -13,7 +13,7 @@ export class MateriasService {
     }
 
 
-    async getAllMaterias(): Promise<Materias[]> {
+    async getAllMaterias(): Promise<Materia[]> {
         try {
             return await this.materiasRepository.getAllMaterias();
         } catch (error) {

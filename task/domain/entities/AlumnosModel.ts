@@ -1,27 +1,4 @@
-import { DataTypes } from 'sequelize';
-import { sequelize } from '../../../Database/Sequelize';
+// Si decides mantener ambos archivos por separado, asegúrate de que AlumnosModel.ts importe y exporte la clase Alumnos adecuadamente
+import { Alumnos } from './Alumnos'; // Ajusta la ruta según tu estructura de proyecto
 
-const AlumnosModel = sequelize.define('Alumnos', {
-    Sch_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    last_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-});
-
-AlumnosModel.sync()
-.then(() => {
-  console.log('Tabla de alumnos creada correctamente.');
-})
-.catch(error => {
-  console.error('Error al crear la tabla de alumnos:', error);
-});
-
-export default AlumnosModel;
+export default Alumnos;

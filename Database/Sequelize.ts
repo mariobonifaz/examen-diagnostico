@@ -4,13 +4,24 @@ export const sequelize = new Sequelize('diagnosticoSOA', 'postgres', 'POSTGRES',
     host: 'localhost',
     port: 5432,
     dialect: 'postgres',
-    dialectOptions: {
-    }
+    dialectOptions: {}
 });
 
+import AlumnosModel from '../task/domain/entities/AlumnosModel'; // Asegúrate de ajustar la ruta
+import MateriasModel from '../task/domain/entities/MateriasModel'; // Asegúrate de ajustar la ruta
+
+// Establecer las relaciones
+AlumnosModel.belongsToMany(MateriasModel, { through: 'AlumnosMaterias' });
+MateriasModel.belongsToMany(AlumnosModel, { through: 'AlumnosMaterias' });
+
+// Autenticación y sincronización de la base de datos
 sequelize.authenticate()
     .then(() => {
         console.log('Connection has been established successfully.');
+        // Sincroniza todos los modelos con la base de datos
+        sequelize.sync().then(() => {
+            console.log('Models are synchronized with the database.');
+        });
     })
     .catch(err => {
         console.error('Unable to connect to the database:', err);

@@ -33,7 +33,13 @@ class AlumnosService {
                     throw new Error(`Alumno with ID ${alumnoId} not found`);
                 }
                 const materias = yield Promise.all(materiaIds.map(id => this.materiasRepository.getMateriaById(id)));
-                yield alumno.setMaterias(materias);
+                const ids = materias.filter(materia => materia !== null).map(materia => materia.id);
+                if ('setMaterias' in alumno) {
+                    yield alumno.setMaterias(ids);
+                }
+                else {
+                    throw new Error("setMaterias method not available on alumno object");
+                }
             }
             catch (error) {
                 throw new Error(`Error assigning materias to alumno: ${error.message}`);

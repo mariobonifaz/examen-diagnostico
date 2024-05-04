@@ -48,7 +48,7 @@ class PostgresAlumnosRepositoy {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const alumno = yield AlumnosModel_1.default.findByPk(alumnoId);
-                return alumno ? alumno.toJSON() : null;
+                return alumno; // Devuelve el modelo completo sin conversión a JSON
             }
             catch (error) {
                 throw new Error(`Error getting alumno by ID: ${error.message}`);

@@ -1,26 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const sequelize_1 = require("sequelize");
-const Sequelize_1 = require("../../../Database/Sequelize");
-const AlumnosModel = Sequelize_1.sequelize.define('Alumnos', {
-    Sch_id: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-    },
-    name: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    last_name: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-});
-AlumnosModel.sync()
-    .then(() => {
-    console.log('Tabla de alumnos creada correctamente.');
-})
-    .catch(error => {
-    console.error('Error al crear la tabla de alumnos:', error);
-});
-exports.default = AlumnosModel;
+// Si decides mantener ambos archivos por separado, asegúrate de que AlumnosModel.ts importe y exporte la clase Alumnos adecuadamente
+const Alumnos_1 = require("./Alumnos"); // Ajusta la ruta según tu estructura de proyecto
+exports.default = Alumnos_1.Alumnos;
